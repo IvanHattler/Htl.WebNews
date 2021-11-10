@@ -1,7 +1,4 @@
 ﻿{
-  "ConnectionStrings": {
-    "CommerceConnection": "Server=localhost;Database=htl;User ID=pgroot;Password=1234;Port=5433;"
-  },
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
