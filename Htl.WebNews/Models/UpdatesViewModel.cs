@@ -8,8 +8,8 @@ namespace Htl.WebNews.Models
 {
     public class UpdatesViewModel
     {
-        public IEnumerable<Update> Updates { get; }
-        public UpdatesViewModel(IEnumerable<Update> updates)
+        public IEnumerable<UpdateViewModel> Updates { get; }
+        public UpdatesViewModel(IEnumerable<UpdateViewModel> updates)
         {
             Updates = updates;
         }

@@ -1,4 +1,4 @@
-﻿using Htl.Core.Domain;
+﻿using Htl.Services.ServiceInterfaces;
 using Htl.WebNews.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,23 +13,21 @@ namespace Htl.WebNews.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IUpdateService _updateService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IUpdateService updateService)
         {
-            _logger = logger;
+            _logger = logger
+                ?? throw new ArgumentNullException(nameof(logger));
+            _updateService = updateService
+                ?? throw new ArgumentNullException(nameof(updateService));
         }
 
         public IActionResult Index()
         {
-            return View(new UpdatesViewModel(
-                new List<Update>() {
-                    new Update("1.0", "1", "i.nefedov", "Первая версия"),
-                    new Update("1.0", "2", "i.nefedov", ""),
-                    new Update("1.0", "3", "i.nefedov", ""),
-                    new Update("1.0", "4", "i.nefedov", ""),
-                    new Update("1.0", "5", "i.nefedov", ""),
-                    new Update("1.0", "7", "i.nefedov", ""),
-                }));
+            var updatesViewModel = new UpdatesViewModel(
+                _updateService.GetUpdates().Select(u => new UpdateViewModel(u)));
+            return View(updatesViewModel);
         }
 
         public IActionResult Privacy()
