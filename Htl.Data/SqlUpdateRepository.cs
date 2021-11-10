@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using Htl.Core.Domain;
+using Htl.Services.DataInterfaces;
 
 namespace Htl.Data
 {
-    public class UpdateRepository
+    public class SqlUpdateRepository : IUpdateRepository
     {
         private readonly UpdateContext _updateContext;
-        public UpdateRepository(UpdateContext updateContext)
+        public SqlUpdateRepository(UpdateContext updateContext)
         {
             _updateContext = updateContext
                 ?? throw new ArgumentNullException(nameof(updateContext));
@@ -17,7 +18,7 @@ namespace Htl.Data
 
         public IEnumerable<Update> GetUpdates()
         {
-            return _updateContext.Updates.Select(u => u);
+            return _updateContext.Updates.AsEnumerable();
         }
     }
 }
