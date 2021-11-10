@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Htl.WebNews.Models
 {
-    public class UpdatesViewModel
+    public class UpdatesViewModel 
     {
-        public IEnumerable<UpdateViewModel> Updates { get; }
-        public UpdatesViewModel(IEnumerable<UpdateViewModel> updates)
+        public IEnumerable<UpdateViewModel> UpdateViewModels { get; }
+        public UpdatesViewModel(IEnumerable<UpdateViewModel> updateViewModels)
         {
-            Updates = updates;
+            UpdateViewModels = updateViewModels;
         }
     }
 }
