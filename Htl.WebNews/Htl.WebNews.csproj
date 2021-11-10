@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Htl.Core\Htl.Core.csproj" />
     <ProjectReference Include="..\Htl.Data\Htl.Data.csproj" />
+    <ProjectReference Include="..\Htl.Services\Htl.Services.csproj" />
   </ItemGroup>
 
 </Project>
