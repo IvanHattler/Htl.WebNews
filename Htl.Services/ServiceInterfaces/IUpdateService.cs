@@ -6,6 +6,6 @@ namespace Htl.Services.ServiceInterfaces
 {
     public interface IUpdateService
     {
-        IEnumerable<Update> GetUpdates();
+        IEnumerable<Update> GetUpdates(int count);
     }
 }

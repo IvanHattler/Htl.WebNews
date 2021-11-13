@@ -1,9 +1,11 @@
 ﻿using Htl.Data;
 using Htl.Services.Services;
 using Htl.WebNews.Controllers;
+using Htl.WebNews.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +16,11 @@ namespace Htl.WebNews
     public class BaseControllerActivator : IControllerActivator
     {
         private readonly string _connectionString;
-        public BaseControllerActivator(string connectionString)
+        private readonly PagingOptions _pagingOptions;
+        public BaseControllerActivator(string connectionString, PagingOptions pagingOptions)
         {
+            _pagingOptions = pagingOptions
+                ?? throw new ArgumentNullException(nameof(pagingOptions));
             _connectionString = connectionString
                 ?? throw new ArgumentNullException(nameof(connectionString));
         }
@@ -47,7 +52,8 @@ namespace Htl.WebNews
                                 new UpdateService(
                                     new SqlUpdateRepository(
                                         new UpdateContext(
-                                            _connectionString))));
+                                            _connectionString))),
+                                _pagingOptions);
         }
 
         public void Release(ControllerContext context, object controller)

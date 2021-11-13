@@ -16,9 +16,9 @@ namespace Htl.Data
                 ?? throw new ArgumentNullException(nameof(updateContext));
         }
 
-        public IEnumerable<Update> GetUpdates()
+        public IEnumerable<Update> GetUpdates(int count)
         {
-            return _updateContext.Updates.AsEnumerable();
+            return _updateContext.Updates.Take(count).AsEnumerable();
         }
     }
 }

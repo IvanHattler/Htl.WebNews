@@ -1,3 +1,4 @@
+using Htl.WebNews.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,7 +31,8 @@ namespace Htl.WebNews
             var connectionString = Configuration.GetConnectionString("BaseConnection");
             services.AddSingleton<IControllerActivator>(
                 new BaseControllerActivator(
-                    connectionString));
+                    connectionString,
+                    Configuration.GetSection(PagingOptions.Paging).Get<PagingOptions>()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

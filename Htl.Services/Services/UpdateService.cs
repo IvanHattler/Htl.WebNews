@@ -15,9 +15,9 @@ namespace Htl.Services.Services
             _repository = repository 
                 ?? throw new ArgumentNullException(nameof(repository));
         }
-        public IEnumerable<Update> GetUpdates()
+        public IEnumerable<Update> GetUpdates(int count)
         {
-            return _repository.GetUpdates();
+            return _repository.GetUpdates(count);
         }
     }
 }

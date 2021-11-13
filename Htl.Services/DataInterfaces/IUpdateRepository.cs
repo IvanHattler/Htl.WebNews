@@ -7,6 +7,6 @@ namespace Htl.Services.DataInterfaces
 {
     public interface IUpdateRepository
     {
-        IEnumerable<Update> GetUpdates();
+        IEnumerable<Update> GetUpdates(int count);
     }
 }

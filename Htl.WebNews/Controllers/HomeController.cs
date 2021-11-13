@@ -1,7 +1,9 @@
 ﻿using Htl.Services.ServiceInterfaces;
+using Htl.WebNews.Infrastructure;
 using Htl.WebNews.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,9 +16,13 @@ namespace Htl.WebNews.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IUpdateService _updateService;
+        private readonly PagingOptions _pagingOptions;
 
-        public HomeController(ILogger<HomeController> logger, IUpdateService updateService)
+        public HomeController(ILogger<HomeController> logger, IUpdateService updateService,
+            PagingOptions pagingOptions)
         {
+            _pagingOptions = pagingOptions 
+                ?? throw new ArgumentNullException(nameof(pagingOptions));
             _logger = logger
                 ?? throw new ArgumentNullException(nameof(logger));
             _updateService = updateService
@@ -26,7 +32,7 @@ namespace Htl.WebNews.Controllers
         public IActionResult Index()
         {
             var updatesViewModel = new UpdatesViewModel(
-                _updateService.GetUpdates().Select(u => new UpdateViewModel(u)));
+                _updateService.GetUpdates(_pagingOptions.CountOnPage).Select(u => new UpdateViewModel(u)));
             return View(updatesViewModel);
         }
 
