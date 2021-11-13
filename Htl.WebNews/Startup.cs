@@ -25,14 +25,16 @@ namespace Htl.WebNews
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddOptions<PagingOptions>()
+                .Bind(Configuration.GetSection(PagingOptions.Paging))
+                .ValidateDataAnnotations();
             services.AddMvc();
             services.AddHttpContextAccessor();
 
             var connectionString = Configuration.GetConnectionString("BaseConnection");
             services.AddSingleton<IControllerActivator>(
                 new BaseControllerActivator(
-                    connectionString,
-                    Configuration.GetSection(PagingOptions.Paging).Get<PagingOptions>()));
+                    connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

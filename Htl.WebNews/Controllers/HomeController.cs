@@ -16,23 +16,24 @@ namespace Htl.WebNews.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IUpdateService _updateService;
-        private readonly PagingOptions _pagingOptions;
 
-        public HomeController(ILogger<HomeController> logger, IUpdateService updateService,
-            PagingOptions pagingOptions)
+        public HomeController(ILogger<HomeController> logger, IUpdateService updateService)
         {
-            _pagingOptions = pagingOptions 
-                ?? throw new ArgumentNullException(nameof(pagingOptions));
             _logger = logger
                 ?? throw new ArgumentNullException(nameof(logger));
             _updateService = updateService
                 ?? throw new ArgumentNullException(nameof(updateService));
         }
 
-        public IActionResult Index()
+        public IActionResult Index([FromServices] IOptions<PagingOptions> pagingOptions)
         {
+            int countOnPage = 10;
+            if (pagingOptions?.Value != null)
+            {
+                countOnPage = pagingOptions.Value.CountOnPage;
+            }
             var updatesViewModel = new UpdatesViewModel(
-                _updateService.GetUpdates(_pagingOptions.CountOnPage).Select(u => new UpdateViewModel(u)));
+                _updateService.GetUpdates(countOnPage).Select(u => new UpdateViewModel(u)));
             return View(updatesViewModel);
         }
 

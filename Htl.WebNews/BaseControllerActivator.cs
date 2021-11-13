@@ -16,11 +16,8 @@ namespace Htl.WebNews
     public class BaseControllerActivator : IControllerActivator
     {
         private readonly string _connectionString;
-        private readonly PagingOptions _pagingOptions;
-        public BaseControllerActivator(string connectionString, PagingOptions pagingOptions)
+        public BaseControllerActivator(string connectionString)
         {
-            _pagingOptions = pagingOptions
-                ?? throw new ArgumentNullException(nameof(pagingOptions));
             _connectionString = connectionString
                 ?? throw new ArgumentNullException(nameof(connectionString));
         }
@@ -52,8 +49,7 @@ namespace Htl.WebNews
                                 new UpdateService(
                                     new SqlUpdateRepository(
                                         new UpdateContext(
-                                            _connectionString))),
-                                _pagingOptions);
+                                            _connectionString))));
         }
 
         public void Release(ControllerContext context, object controller)
