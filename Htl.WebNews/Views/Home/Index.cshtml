@@ -1,11 +1,10 @@
 ﻿@model UpdatesViewModel
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Updates List";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h5 class="display-4">Updates List</h5>
     @foreach (var item in Model.UpdateViewModels)
     {
         <p>@item.SummaryText</p>
